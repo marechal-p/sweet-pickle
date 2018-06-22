@@ -19,14 +19,14 @@ class Client(object):
             (host, port)
         )
 
-    def stop(self, code=0):
+    def stop(self, code: int = 0):
         self.send(common.STOP)
         exit(code)
 
 class Executable(object):
     '''Customize the serialization of this object when instanciating it'''
 
-    def __init__(self, target, *args):
+    def __init__(self, target: callable, *args):
         self.target = target
         self.args = args
 
@@ -39,7 +39,7 @@ class Executable(object):
         executable = cls(exec, code)
         return client.send(executable)
 
-def EXPLOIT(client):
+def EXPLOIT(client: Client):
     '''Sends malicious code to `client` !'''
     return Executable.exec(client,
         'for i in range(999): print(i)\n'
